@@ -13,7 +13,7 @@ This is a Warehouse Management System (WMS) implemented in Python. It provides f
 ## Installation
 
 1. Clone this repository:
-git clone <your_repo_here>
+git clone https://github.com/Yoithebrain/Uge-7---8---Niveau-2
 
 2. Create and activate a virtual environment:
 cd warehouse-management
