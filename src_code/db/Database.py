@@ -34,7 +34,7 @@ class Database:
             'password': parser.get('database', 'password')
         }
         return db_config
-
+'''
 # Example usage:
 def main():
     db = Database()
@@ -45,3 +45,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
