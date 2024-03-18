@@ -2,6 +2,11 @@
 
 This is a Warehouse Management System (WMS) implemented in Python. It provides functionality for managing inventory, suppliers, categories, transactions, and user actions within a warehouse.
 
+Based on the requirements in /Documentation/Assignment_Week_7_8_level_2.pdf.
+
+## Diagrams
+To be made and descriped here.
+
 ## Features
 
 - **Inventory Management**: Keep track of all products in the warehouse, including their quantities, locations, and statuses.
@@ -22,7 +27,6 @@ venv\Scripts\activate # For Windows
 
 3. Install dependencies:
 pip install -r requirements.txt
-
 
 4. Configure the database connection in `config.ini`.
 
