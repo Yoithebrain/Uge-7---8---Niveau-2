@@ -25,3 +25,9 @@ pip-delete-this-directory.txt
 
 # Environment Variables
 .env
+# Virtual env
+env 
+venv 
+.venv
+virtualenv 
+myenv
