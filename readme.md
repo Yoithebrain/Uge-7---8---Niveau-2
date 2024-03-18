@@ -24,7 +24,7 @@ venv\Scripts\activate # For Windows
 pip install -r requirements.txt
 
 
-4. Configure the database connection in `config.py`.
+4. Configure the database connection in `config.ini`.
 
 5. Run the application:
 python main.py
