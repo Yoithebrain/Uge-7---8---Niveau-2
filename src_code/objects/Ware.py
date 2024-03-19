@@ -29,9 +29,22 @@ class Ware(Base):
     # Relationship
     category = relationship(Category, back_populates="wares")
     suppliers = relationship("WareSupplier", foreign_keys="[WareSupplier.WareID]", back_populates="ware")
+    transactions = relationship("Transaction", back_populates="ware")
+
     
+    def as_dict(self):
+        return {
+            'wareId': self.wareId,
+            'wareName': self.wareName,
+            'wareDescription': self.wareDescription,
+            'wareQuantity': self.wareQuantity,
+            'warePrice': self.warePrice,
+            'wareCategoryId': self.wareCategoryId,
+            'wareSupplierId': self.wareSupplierId
+        }
+
     def __repr__(self):
-         return f"<Ware(id='{self.wareId}', name='{self.wareName}', description='{self.wareDescription}', quantity={self.wareQuantity}, price={self.warePrice}, category_id={self.wareCategoryId})>"
+        return str(self.as_dict())
 
     @classmethod
     def add(cls, name, description, quantity, price, category_id, supplier_id):

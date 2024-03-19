@@ -5,8 +5,11 @@
 # Imports
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from src_code.db.Database import Base  # Assuming Base is defined in your Database module
-
+from src_code.db.Database import Database  # Assuming Base is defined in your Database module
+# Get Base and Session from Database
+db = Database()
+Base = db.Base
+Session = db.Session
 # Globals
 
 # Class
@@ -19,17 +22,76 @@ class Category(Base):
     # Define the relationship
     wares = relationship("Ware", back_populates="category")
 
+    def __repr__(self):
+        return str(self.as_dict())
+    
+    def as_dict(self):
+        return {
+            'CategoryID': self.CategoryID,
+            'Name': self.Name,
+            'Description': self.Description
+        }
+
     @classmethod
-    def create(cls, name, description):
-        pass
+    def add(cls, name, description):
+        session = None
+        try:
+            session = Session()
+            new_category = cls(
+                Name=name,
+                Description=description
+            )
+            session.add(new_category)
+            session.commit()
+            print("Category added successfully!")
+        except Exception as e:
+            print(f"Error adding category: {e}")
+            if session:
+                session.rollback()  # Rollback the transaction in case of an error
+        finally:
+            if session:
+                session.close()
 
     @classmethod
     def read(cls, category_id):
-        pass
+        session = None
+        try:
+            session = Session()
+            category = session.query(cls).filter_by(CategoryID=category_id).first()
+            if category:
+                print("Category found:", category)
+                return category
+            else:
+                print("Category not found.")
+                return None
+        except Exception as e:
+            print(f"Error reading category: {e}")
+        finally:
+            if session:
+                session.close()
 
     @classmethod
     def update(cls, category_id, name=None, description=None):
-        pass
+        session = None
+        try:
+            session = Session()
+            category = session.query(cls).filter_by(CategoryID=category_id).first()
+            if category:
+                if name:
+                    category.Name = name
+                if description:
+                    category.Description = description
+                session.commit()
+                print("Category updated successfully!")
+            else:
+                print("Category not found.")
+        except Exception as e:
+            print(f"Error updating category: {e}")
+            if session:
+                session.rollback()
+        finally:
+            if session:
+                session.close()
 
     @classmethod
     def delete(cls, category_id):
