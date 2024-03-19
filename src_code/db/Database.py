@@ -1,13 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from configparser import ConfigParser
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
 
 class Database:
-    def __init__(self, config_file='../../config.ini'):
+    def __init__(self, config_file='C:\\Users\\KOM\\Documents\\Uge 7 & 8 - Niveau 2\\src_code\\db\\config.ini'):
         self.config_file = config_file
         self.engine = None
         self.Session = None
+        self.Base = Base
+        self.connect()  # Auto connect when instance is created to ensure a session is ongoing
 
     def connect(self):
         try:
@@ -34,15 +38,14 @@ class Database:
             'password': parser.get('database', 'password')
         }
         return db_config
-'''
+
+
 # Example usage:
 def main():
-    db = Database()
-    db.connect()
+    db = Database()  # Database instance created
     # Perform database operations using db.Session
     # ...
-    db.close()
+    db.close()  # Close the database connection
 
 if __name__ == "__main__":
     main()
-'''
