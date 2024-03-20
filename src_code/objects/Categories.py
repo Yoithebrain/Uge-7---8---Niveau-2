@@ -5,11 +5,11 @@
 # Imports
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from src_code.db.Database import Database  # Assuming Base is defined in your Database module
-# Get Base and Session from Database
-db = Database()
-Base = db.Base
-Session = db.Session
+from src_code.db.Database import Base  # Assuming Base is defined in your Database module
+####
+# Refactored to avoid session detached issues
+# - CLY 20-03-24 -
+####
 # Globals
 
 # Class
@@ -33,10 +33,8 @@ class Category(Base):
         }
 
     @classmethod
-    def add(cls, name, description):
-        session = None
+    def add(cls, session, name, description):
         try:
-            session = Session()
             new_category = cls(
                 Name=name,
                 Description=description
@@ -46,17 +44,11 @@ class Category(Base):
             print("Category added successfully!")
         except Exception as e:
             print(f"Error adding category: {e}")
-            if session:
-                session.rollback()  # Rollback the transaction in case of an error
-        finally:
-            if session:
-                session.close()
+            session.rollback()
 
     @classmethod
-    def read(cls, category_id):
-        session = None
+    def read(cls, session, category_id):
         try:
-            session = Session()
             category = session.query(cls).filter_by(CategoryID=category_id).first()
             if category:
                 print("Category found:", category)
@@ -66,15 +58,10 @@ class Category(Base):
                 return None
         except Exception as e:
             print(f"Error reading category: {e}")
-        finally:
-            if session:
-                session.close()
 
     @classmethod
-    def update(cls, category_id, name=None, description=None):
-        session = None
+    def update(cls, session, category_id, name=None, description=None):
         try:
-            session = Session()
             category = session.query(cls).filter_by(CategoryID=category_id).first()
             if category:
                 if name:
@@ -87,14 +74,10 @@ class Category(Base):
                 print("Category not found.")
         except Exception as e:
             print(f"Error updating category: {e}")
-            if session:
-                session.rollback()
-        finally:
-            if session:
-                session.close()
+            session.rollback()
 
     @classmethod
-    def delete(cls, category_id):
+    def delete(cls, session, category_id):
         pass
 
 
