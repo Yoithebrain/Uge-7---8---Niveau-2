@@ -7,13 +7,12 @@ class CategoriesMenu:
             "1": "View Categories",
             "2": "Add Category",
             "3": "Update Category",
-            "4": "Delete Category",
-            "5": "Back to Main Menu"
+            "4": "Delete Category"
         }
 
     def display(self):
         print(self.term.clear())
-        print(self.term.bold_white_center("Category Management"))
+        print(self.term.center(self.term.bold(("Category Management"))))
         for key, value in self.options.items():
             print(f"{self.term.green(key)}. {self.term.bold(value)}")
 

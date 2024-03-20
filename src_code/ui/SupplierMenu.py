@@ -7,13 +7,12 @@ class SupplierMenu:
             "1": "View Suppliers",
             "2": "Add Supplier",
             "3": "Update Supplier",
-            "4": "Delete Supplier",
-            "5": "Back to Main Menu"
+            "4": "Delete Supplier"
         }
 
     def display(self):
         print(self.term.clear())
-        print(self.term.bold_white_center("Supplier Management"))
+        print(self.term.center(self.term.bold(("Supplier Management"))))
         for key, value in self.options.items():
             print(f"{self.term.green(key)}. {self.term.bold(value)}")
 

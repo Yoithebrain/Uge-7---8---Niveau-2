@@ -1,8 +1,8 @@
 from blessed import Terminal
-from WareMenu import WareMenu
-from SupplierMenu import SupplierMenu
-from CategoriesMenu import CategoriesMenu
-from TransactionMenu import TransactionMenu
+from .WareMenu import WareMenu
+from .SupplierMenu import SupplierMenu
+from .CategoriesMenu import CategoriesMenu
+from .TransactionMenu import TransactionMenu
 
 class StartMenu:
     def __init__(self):
@@ -17,7 +17,7 @@ class StartMenu:
 
     def display(self):
         print(self.term.clear())
-        print(self.term.bold_white_center("Warehouse Management System"))
+        print(self.term.center(self.term.bold("Warehouse Management System")))
         for key, value in self.options.items():
             print(f"{self.term.green(key)}. {self.term.bold(value)}")
 
@@ -30,20 +30,51 @@ class StartMenu:
 
     def manage_wares(self):
         wares_menu = WareMenu()
-        wares_menu.display()
-        wares_menu.get_choice()
+        while True:
+            wares_menu.display()
+            choice = wares_menu.get_choice()
+            if choice == "5":
+                break  # Return to start menu
+            # Handle other menu options
 
     def manage_suppliers(self):
         suppliers_menu = SupplierMenu()
-        suppliers_menu.display()
-        suppliers_menu.get_choice()
+        while True:
+            suppliers_menu.display()
+            choice = suppliers_menu.get_choice()
+            if choice == "5":
+                break  # Return to start menu
+            # Handle other menu options
 
     def manage_categories(self):
         categories_menu = CategoriesMenu()
-        categories_menu.display()
-        categories_menu.get_choice()
+        while True:
+            categories_menu.display()
+            choice = categories_menu.get_choice()
+            if choice == "5":
+                break  # Return to start menu
+            # Handle other menu options
 
     def manage_transactions(self):
         transactions_menu = TransactionMenu()
-        transactions_menu.display()
-        transactions_menu.get_choice()
+        while True:
+            transactions_menu.display()
+            choice = transactions_menu.get_choice()
+            if choice == "5":
+                break  # Return to start menu
+            # Handle other menu options
+
+    def start(self):
+        while True:
+            self.display()
+            choice = self.get_choice()
+            if choice == "5":
+                break  # Exit the program
+            elif choice == "1":
+                self.manage_wares()
+            elif choice == "2":
+                self.manage_suppliers()
+            elif choice == "3":
+                self.manage_categories()
+            elif choice == "4":
+                self.manage_transactions()
