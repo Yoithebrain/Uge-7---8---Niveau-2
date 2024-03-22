@@ -57,14 +57,18 @@ class StartMenu:
             # Handle other menu options
 
     def manage_transactions(self):
-        transactions_menu = TransactionMenu()
+        # Init the transactions menu
+        transactions_menu = TransactionMenu(self.session)
+        # Starts the menu, this will run until you go back. Then the menu will comeback to this object.
+        transactions_menu.start()
+        '''
         while True:
             transactions_menu.display()
             choice = transactions_menu.get_choice()
             if choice == "5":
                 break  # Return to start menu
             # Handle other menu options
-
+        '''
     def start(self):
         while True:
             self.display()
