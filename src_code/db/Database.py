@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from configparser import ConfigParser
 from sqlalchemy.ext.declarative import declarative_base
-
+from src_code.objects import *
 Base = declarative_base()
 
 class Database:
@@ -11,7 +11,7 @@ class Database:
         self.engine = None
         self.Session = None
         self.Base = Base
-        self.connect()  # Auto connect when instance is created to ensure a session is ongoing
+        self.connect()
 
     def connect(self):
         try:
@@ -19,6 +19,10 @@ class Database:
             db_url = f"mysql+mysqlconnector://{config['user']}:{config['password']}@{config['host']}/{config['database']}"
             self.engine = create_engine(db_url)
             self.Session = sessionmaker(bind=self.engine)
+            # Iterate over the subclasses of Base and add their tables to the metadata
+            for cls in Base.__subclasses__():
+                cls.metadata.tables[cls.__tablename__] = cls.__table__
+            self.Base.metadata.create_all(self.engine)  # Include all ORM objects in the metadata
             print("Connected to database successfully!")
         except Exception as e:
             print(f"Error connecting to database: {e}")
@@ -38,8 +42,6 @@ class Database:
             'password': parser.get('database', 'password')
         }
         return db_config
-
-
 # Example usage:
 def main():
     db = Database()  # Database instance created

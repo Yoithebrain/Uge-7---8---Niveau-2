@@ -7,11 +7,11 @@ from sqlalchemy import Column, Integer, Enum, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from src_code.db.Database import Base
 from datetime import datetime
-from src_code.objects.Ware import Ware
+#from src_code.objects.Ware import Ware
 # Globals
 # Get Base and Session from Database
 # Class
-class Transaction(Base):
+class Transactions(Base):
     __tablename__ = 'transactions'
 
     TransactionID = Column(Integer, primary_key=True, autoincrement=True)
@@ -20,7 +20,7 @@ class Transaction(Base):
     Quantity = Column(Integer)
     TransactionDate = Column(DateTime, default=datetime.now)
 
-    ware = relationship(Ware, back_populates="transactions")
+    ware = relationship('Ware', back_populates="transactions")
 
     def __repr__(self):
         return str(self.as_dict())

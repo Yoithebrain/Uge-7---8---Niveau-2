@@ -5,7 +5,7 @@ from .CategoriesMenu import CategoriesMenu
 from .TransactionMenu import TransactionMenu
 
 class StartMenu:
-    def __init__(self):
+    def __init__(self, session):
         self.term = Terminal()
         self.options = {
             "1": "Manage Wares",
@@ -14,6 +14,7 @@ class StartMenu:
             "4": "Manage Transactions",
             "5": "Exit"
         }
+        self.session = session
 
     def display(self):
         print(self.term.clear())
@@ -29,12 +30,12 @@ class StartMenu:
             return val
 
     def manage_wares(self):
-        wares_menu = WareMenu()
-        while True:
-            wares_menu.display()
-            choice = wares_menu.get_choice()
-            if choice == "5":
-                break  # Return to start menu
+        wares_menu = WareMenu(self.session)
+        wares_menu.start()
+            #choice = wares_menu.get_choice()
+            #if choice == "5":
+                #break
+                #return choice  # Return to start menu
             # Handle other menu options
 
     def manage_suppliers(self):

@@ -9,6 +9,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from src_code.objects.Categories import Category
 from src_code.objects.WareSupplier import WareSupplier
+from src_code.objects.Transaction import Transactions
 
 
 # Class
@@ -23,9 +24,9 @@ class Ware(Base):
     wareSupplierId = Column(Integer, ForeignKey('waresupplier.WareID'))
     
     # Relationship
-    category = relationship(Category, back_populates="wares")
+    category = relationship("Category", back_populates="wares")
     suppliers = relationship("WareSupplier", foreign_keys="[WareSupplier.WareID]", back_populates="ware")
-    transactions = relationship("Transaction", back_populates="ware")
+    transactions = relationship("Transactions", back_populates="ware")
 
     
     def as_dict(self):
@@ -43,7 +44,7 @@ class Ware(Base):
         return str(self.as_dict())
 
     @classmethod
-    def add(cls, session, name, description, quantity, price, category_id, supplier_id):
+    def add(cls, session, name, description, quantity, price, category_id):
         try:
             new_ware = cls(
                 wareName=name,
@@ -51,8 +52,9 @@ class Ware(Base):
                 wareQuantity=quantity,
                 warePrice=price,
                 wareCategoryId=category_id,
-                wareSupplierId=supplier_id
+                #wareSupplierId=supplier_id
             )
+            print("YOUR WARE: ", new_ware)
             session.add(new_ware)
             session.commit()
             print("Ware added successfully!")
