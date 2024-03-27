@@ -4,6 +4,8 @@ This is a Warehouse Management System (WMS) implemented in Python. It provides f
 
 Based on the requirements in /Documentation/Assignment_Week_7_8_level_2.pdf.
 
+It's missing diagrams due to the fact that I ended up becoming sick this sunday, the 24th of march and some menus have still not been implemented due to the same fact.
+
 ## Diagrams
 To be made and descriped here.
 
@@ -31,7 +33,7 @@ pip install -r requirements.txt
 4. Configure the database connection in `config.ini`.
 
 5. Run the application:
-python main.py
+python mainwithmenus.py
 
 ## Usage
 
